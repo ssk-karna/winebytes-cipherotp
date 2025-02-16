@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.library") // Standard Android library plugin
+    id("org.jetbrains.kotlin.android") // Kotlin Android plugin
 }
 
 android {
@@ -8,11 +8,8 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.winebytes"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
