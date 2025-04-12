@@ -21,5 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "CipherOtp"
 include(":app")
-include(":library")
-

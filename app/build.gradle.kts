@@ -4,14 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "com.winebytes"
+    namespace = "com.winebytes.cipherotp"
     compileSdk = 35
 
     defaultConfig {
         minSdk = 24
         targetSdk = 35
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -23,6 +21,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
