@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.winebytes.cipherotp.OtpBoxView;
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +18,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val otpBoxView = findViewById<OtpBoxView>(R.id.otpBoxView)
+        otpBoxView.setBorderColor(R.color.green)
+       // otpBoxView.setOtpBoxCount(6)
     }
 
 }

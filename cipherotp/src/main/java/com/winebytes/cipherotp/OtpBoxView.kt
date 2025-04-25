@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
@@ -22,6 +24,8 @@ class OtpBoxView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs) {
     private var otpLength = 4 // Default length
     private val boxes = mutableListOf<EditText>()
+    private var borderColor: Int = Color.BLACK // default
+
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         color = Color.BLACK
@@ -30,7 +34,18 @@ class OtpBoxView @JvmOverloads constructor(
 
     init {
         orientation = HORIZONTAL
+        extractAttributes(attrs)
         setupOtpBoxes()
+    }
+
+    private fun extractAttributes(attrs: AttributeSet?) {
+        context.theme.obtainStyledAttributes(attrs, R.styleable.OtpBoxView, 0, 0).apply {
+            try {
+                borderColor = getColor(R.styleable.OtpBoxView_boxBorderColor, Color.BLACK)
+            } finally {
+                recycle()
+            }
+        }
     }
 
     private fun setupOtpBoxes() {
@@ -54,7 +69,7 @@ class OtpBoxView @JvmOverloads constructor(
                 inputType = InputType.TYPE_CLASS_NUMBER
                 filters = arrayOf(InputFilter.LengthFilter(1))
                 textAlignment = TEXT_ALIGNMENT_CENTER
-                background = ContextCompat.getDrawable(context, R.drawable.otp_box_background)
+                background = createBoxBackground(borderColor)
                 setOnKeyListener { _, keyCode, event ->
                     if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && text.isEmpty() && index > 0) {
                         boxes[index - 1].requestFocus()
@@ -75,6 +90,33 @@ class OtpBoxView @JvmOverloads constructor(
             boxes.add(editText)
         }
     }
+
+
+    private fun createBoxBackground(color: Int): Drawable {
+        return GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            setColor(Color.TRANSPARENT)
+            setStroke(2.dpToPx(context), color)
+            cornerRadius = 6.dpToPx(context).toFloat()
+        }
+    }
+
+    fun setBorderColor(color: Int) {
+        borderColor = color
+        // Update each EditText with the new border color
+        boxes.forEach { editText ->
+            val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.otp_box_background)
+            if (backgroundDrawable is GradientDrawable) {
+                backgroundDrawable.setStroke(2.dpToPx(context), borderColor)
+            }
+            editText.background = backgroundDrawable
+        }
+        invalidate()  // To force a redraw with the new border color
+    }
+
+
+
+    fun Int.dpToPx(context: Context): Int = (this * context.resources.displayMetrics.density).toInt()
 
     fun getOtp(): String = boxes.joinToString("") { it.text.toString() }
     fun setOtp(value: String) {

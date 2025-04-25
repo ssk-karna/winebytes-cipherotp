@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="OtpBoxView">
+        <attr name="boxBorderColor" format="color" />
+    </declare-styleable>
+</resources>
