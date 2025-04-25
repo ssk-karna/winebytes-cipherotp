@@ -49,7 +49,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.github.ssk-karna"
                 artifactId = "winebytes-cipherotp"
-                version = "1.0"
+                version = "1.0.0"
             }
         }
     }
