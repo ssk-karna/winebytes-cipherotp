@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val otpBoxView = findViewById<OtpBoxView>(R.id.otpBoxView)
         otpBoxView.setBorderColor(R.color.green)
-       // otpBoxView.setOtpBoxCount(6)
+        otpBoxView.setOtpBoxCount(6)
     }
 
 }

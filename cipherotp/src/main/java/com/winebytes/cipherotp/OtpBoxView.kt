@@ -1,7 +1,7 @@
 package com.winebytes.cipherotp
 
 import android.content.Context
-import android.graphics.Canvas
+import androidx.annotation.IntRange
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
@@ -124,6 +124,13 @@ class OtpBoxView @JvmOverloads constructor(
             if (index < boxes.size) boxes[index].setText(char.toString())
         }
     }
+
+    // Expose a setter method to change the number of OTP boxes programmatically
+    fun setOtpBoxCount(@IntRange(from = 4, to = 8) count: Int = 4) { // Ensure it's between 4 and 8
+        otpLength = count
+        setupOtpBoxes()  // Rebuild the boxes with the new count
+    }
+
 
     private fun getOtpTextWatcher(index: Int): TextWatcher {
         return object : TextWatcher {
