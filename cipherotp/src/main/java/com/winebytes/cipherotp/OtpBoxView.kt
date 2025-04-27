@@ -17,12 +17,14 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import android.util.TypedValue
+import com.winebytes.cipherotp.utils.Constants
+import com.winebytes.cipherotp.utils.Extensions.Companion.dpToPx
 
 
 class OtpBoxView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
-    private var otpLength = 4 // Default length
+    private var otpLength = Constants.MAX_OTP_LENGTH// Default length
     private val boxes = mutableListOf<EditText>()
     private var borderColor: Int = Color.BLACK // default
 
@@ -114,10 +116,6 @@ class OtpBoxView @JvmOverloads constructor(
         invalidate()  // To force a redraw with the new border color
     }
 
-
-
-    fun Int.dpToPx(context: Context): Int = (this * context.resources.displayMetrics.density).toInt()
-
     fun getOtp(): String = boxes.joinToString("") { it.text.toString() }
     fun setOtp(value: String) {
         value.forEachIndexed { index, char ->
@@ -126,7 +124,7 @@ class OtpBoxView @JvmOverloads constructor(
     }
 
     // Expose a setter method to change the number of OTP boxes programmatically
-    fun setOtpBoxCount(@IntRange(from = 4, to = 8) count: Int = 4) { // Ensure it's between 4 and 8
+    fun setOtpBoxCount(@IntRange(from = Constants.MIN_OTP_LENGTH.toLong(), to = Constants.MAX_OTP_LENGTH.toLong()) count: Int = Constants.MIN_OTP_LENGTH) { // Ensure it's between 4 and 8
         otpLength = count
         setupOtpBoxes()  // Rebuild the boxes with the new count
     }
