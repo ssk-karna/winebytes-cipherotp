@@ -1,6 +1,8 @@
 package com.winebytes.winebytesapps
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,8 +21,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         val otpBoxView = findViewById<OtpBoxView>(R.id.otpBoxView)
+        val btnFetchOtp = findViewById<Button>(R.id.btn_fetch_otp)
+        val tvOtp = findViewById<TextView>(R.id.tv_otp)
         otpBoxView.setBorderColor(R.color.green)
         otpBoxView.setOtpBoxCount(6)
+
+        btnFetchOtp.setOnClickListener {
+            val otp = otpBoxView.getOtp()
+            tvOtp.setText(otp)
+            // Handle the OTP value as needed
+        }
+
+
     }
 
 }
